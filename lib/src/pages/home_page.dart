@@ -205,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                         text:
                             Base.homePageController.selectedDistrict.value != ''
                                 ? Base.homePageController.selectedDistrict.value
-                                : 'Please select a district',
+                                : 'Please select a district & union.',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
