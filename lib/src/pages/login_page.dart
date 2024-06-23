@@ -213,8 +213,8 @@ class LoginPage extends StatelessWidget {
                         log('UserName: ${Base.authController.username.value}');
                         log('PassWord: ${Base.authController.password.value}');
 
-                        // await Base.authController.login();
-                        offAll(HomePage());
+                        await Base.authController.login();
+                        // offAll(HomePage());
                       }
                     },
                     style: TextButton.styleFrom(
