@@ -146,7 +146,7 @@ class LoginPage extends StatelessWidget {
                             : Base.authController.textFieldBgColor),
                     padding: const EdgeInsets.all(5.0),
                     child: TextField(
-                      onChanged: Base.authController.password,
+                      onChanged: Base.authController.password.call,
                       onTap: () {
                         Base.authController.selectedFild.value =
                             FormDataEnum.password;

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -119,8 +118,12 @@ class AuthController extends GetxController {
 
       klog('rawData: ${response.data}');
       klog('Code: ${response.statusCode}');
+      klog('statusMessage: ${response.statusMessage}');
 
       final statusCode = response.statusCode;
+      //  final statusMessage = response.statusMessage;
+
+      // klog(accessToken);
       // final statusCode = response.data['status'] as int;
       // klog('status: $statusCode');
 
@@ -130,7 +133,9 @@ class AuthController extends GetxController {
       // if (rawData != null && statusCode == 200) {
       if (rawData != null && statusCode == 200) {
         // final token = rawData['token'] as String;
-        // Base.userController.token.value = token;
+        final accessToken = response.data['access_token'] as String;
+        Base.userController.userName.value = username.value;
+        Base.userController.token.value = accessToken;
 
         // final userInfo = rawData['userInfo'];
 
@@ -173,6 +178,7 @@ class AuthController extends GetxController {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: KText(
+                    // text: statusMessage ?? 'Wrong username or password!',
                     text: 'Wrong username or password!',
                     fontSize: 17,
                     bold: false,
