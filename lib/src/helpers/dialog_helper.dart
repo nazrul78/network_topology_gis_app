@@ -71,12 +71,13 @@ class DialogHelper {
                             items: Base.homePageController.districts
                                 .map(
                                   (item) => DropdownMenuItem<String>(
-                                    value: item,
+                                    onTap: () {},
+                                    value: item.id.toString(),
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 0.0),
                                       child: Text(
-                                        item,
+                                        item.name!,
                                         style: TextStyle(
                                           fontFamily: 'Manrope Regular',
                                           fontSize: 14.0,
@@ -104,8 +105,8 @@ class DialogHelper {
                                 : null,
                             onChanged: (item) {
                               log('$item' + 'KKKKKKKKK');
-                              // Base.homePageController.selectedDistrict.value =
-                              //     item!;
+                              Base.homePageController.selectedDistrict.value =
+                                  item!;
 
                               // Base.homePageController.selectedUpozila.value =
                               //     '';

@@ -5,16 +5,22 @@ import 'package:flutter_map/flutter_map.dart';
 
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:network_topology_gis/src/config/api_endpont.dart';
+import 'package:network_topology_gis/src/config/env.dart';
+import 'package:network_topology_gis/src/helpers/k_log.dart';
+import 'package:network_topology_gis/src/models/dropdown_model.dart';
+import 'package:network_topology_gis/src/services/api_service.dart';
 
 class HomePageController extends GetxController {
-  // final apiService = ApiService();
+  final apiService = ApiService();
   final kMapController = MapController();
   //========== Used to show current location on map ==============
   final isCurrentLocationEnable = RxBool(false);
 
   final centerLatlng = Rx<LatLng?>(null);
 
-  final districts = RxList<String>(['Dhaka', 'Barishal']);
+  final districts = RxList<DropdownModel>([]);
+  // final districts = RxList<String>(['Dhaka', 'Barishal']);
   final upozilas = RxList<String>([]);
   final unions = RxList<String>([]);
 
@@ -250,6 +256,67 @@ class HomePageController extends GetxController {
   //   selectedUpozila.value = null;
   //   selectedUnion.value = null;
   // }
+
+  Future<void> getDistrict({String? district, String? upozilla}) async {
+    districts.clear();
+    final response = await apiService.get(
+      baseUrl: ENV.baseUrl,
+      path: ApiEndpoint.getDistrict,
+      // queryParameters: {
+      //   'district': district,
+      //   'upozilla': upozilla,
+      // }
+    );
+
+    var rawData = response!.data;
+    klog('rawData: $rawData');
+
+    final statusCode = response.statusCode;
+    klog('statusCode: $statusCode');
+
+    if (rawData != null && statusCode == 200) {
+      ///=============>> District list <<=================
+
+      final districData = rawData as List;
+
+      if (districData.isNotEmpty) {
+        final listOfDistricts = districData
+            .map((value) =>
+                DropdownModel.fromJson(value as Map<String, dynamic>))
+            .toList();
+
+        klog('${listOfDistricts[0].name}');
+
+        districts.addAll(listOfDistricts);
+      }
+
+      // final districtList = rawData['district'].cast<String>();
+
+      // districts.value = districtList;
+
+      // klog('districts: ${districts[0]}');
+
+      ///=============>> Upozilla list <<=================
+      // if (rawData['upozilla'] != null && district != null && upozilla == null) {
+      //   final upozillaList = rawData['upozilla'].cast<String>();
+
+      //   upozilas.value = upozillaList;
+
+      //   klog('upozilas: ${upozillaList[0]}');
+      // }
+
+      ///=============>> union list <<=================
+      // if (rawData['siteUnion'] != null &&
+      //     district != null &&
+      //     upozilla != null) {
+      //   final siteUnionList = rawData['siteUnion'].cast<String>();
+
+      //   unions.value = siteUnionList;
+
+      //   klog('unions: ${siteUnionList[0]}');
+      // }
+    }
+  }
 
   // Future<void> getAreas({String? district, String? upozilla}) async {
   //   final response = await apiService.get(

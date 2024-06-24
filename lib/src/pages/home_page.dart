@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage> {
             GestureDetector(
               onTap: () async {
                 // Base.homePageController.clearAllSelectedItem();
-                //  Base.homePageController.getAreas();
+                Base.homePageController.getDistrict();
 
                 DialogHelper.showDropdownDialog();
                 // await showDropdownDialog22(context);
