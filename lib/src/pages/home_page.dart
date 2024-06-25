@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
           foregroundColor: Colors.white,
           centerTitle: true,
           title: const KText(
-            text: 'BD Army',
+            text: 'BTCL',
             // color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 18,
@@ -184,7 +184,7 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () async {
-                // Base.homePageController.clearAllSelectedItem();
+                Base.homePageController.clearAllSelectedItem();
                 Base.homePageController.getDistrict();
 
                 DialogHelper.showDropdownDialog();
@@ -202,10 +202,11 @@ class _HomePageState extends State<HomePage> {
                     child: RichText(
                       text: TextSpan(
                         // ignore: unnecessary_null_comparison
-                        text:
-                            Base.homePageController.selectedDistrict.value != ''
-                                ? Base.homePageController.selectedDistrict.value
-                                : 'Please select a district & union.',
+                        text: Base.homePageController.selectedDistrict.value !=
+                                null
+                            ? Base
+                                .homePageController.selectedDistrict.value!.name
+                            : 'Please select a district & union.',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,

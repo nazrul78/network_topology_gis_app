@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 import 'package:get/get.dart';
@@ -24,7 +21,9 @@ class HomePageController extends GetxController {
   final upozilas = RxList<String>([]);
   final unions = RxList<String>([]);
 
-  final selectedDistrict = RxString('');
+  final selectedDistrict = Rx<DropdownModel?>(null);
+  final selectedDistrictId = RxString('');
+
   final selectedUpozila = RxString('');
   final selectedUnion = RxString('');
 
@@ -246,19 +245,17 @@ class HomePageController extends GetxController {
   // }
 
   void clearAllSelectedId() {
-    selectedDistrict.value = '';
+    selectedDistrictId.value = '';
     selectedUpozila.value = '';
     selectedUnion.value = '';
   }
 
-  // void clearAllSelectedItem() {
-  //   selectedDistrict.value = null;
-  //   selectedUpozila.value = null;
-  //   selectedUnion.value = null;
-  // }
+  void clearAllSelectedItem() {
+    selectedDistrict.value == null;
+    districts.clear();
+  }
 
   Future<void> getDistrict({String? district, String? upozilla}) async {
-    districts.clear();
     final response = await apiService.get(
       baseUrl: ENV.baseUrl,
       path: ApiEndpoint.getDistrict,
@@ -286,6 +283,8 @@ class HomePageController extends GetxController {
             .toList();
 
         klog('${listOfDistricts[0].name}');
+
+        klog(districts.length);
 
         districts.addAll(listOfDistricts);
       }

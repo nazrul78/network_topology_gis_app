@@ -70,9 +70,12 @@ class DialogHelper {
                             //     color: AppTheme.appThemeColor2, size: 30.0),
                             items: Base.homePageController.districts
                                 .map(
-                                  (item) => DropdownMenuItem<String>(
-                                    onTap: () {},
-                                    value: item.id.toString(),
+                                  (item) => DropdownMenuItem<int>(
+                                    onTap: () {
+                                      Base.homePageController.selectedDistrict
+                                          .value = item;
+                                    },
+                                    value: item.id,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 0.0),
@@ -98,15 +101,19 @@ class DialogHelper {
                             //     bottomRight: Radius.circular(5.0),
                             //   ),
                             // ),
+
+                            // ignore: prefer_null_aware_operators
                             value: Base.homePageController.selectedDistrict
                                         .value !=
-                                    ''
-                                ? Base.homePageController.selectedDistrict.value
+                                    null
+                                ? Base.homePageController.selectedDistrict
+                                    .value!.id
                                 : null,
+
                             onChanged: (item) {
                               log('$item' + 'KKKKKKKKK');
-                              Base.homePageController.selectedDistrict.value =
-                                  item!;
+                              // Base.homePageController.selectedDistrict.value =
+                              //     item!;
 
                               // Base.homePageController.selectedUpozila.value =
                               //     '';
@@ -127,16 +134,16 @@ class DialogHelper {
                     ],
                   ),
                   SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      KText(
-                        text: 'Upozila: ',
-                        bold: true,
-                        fontSize: 16,
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: const [
+                  //     KText(
+                  //       text: 'Upozila: ',
+                  //       bold: true,
+                  //       fontSize: 16,
+                  //     ),
+                  //   ],
+                  // ),
                   // Row(
                   //   children: [
                   //     Expanded(
@@ -220,7 +227,8 @@ class DialogHelper {
                   //     ),
                   //   ],
                   // ),
-                  SizedBox(height: 15),
+
+                  // SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
@@ -228,6 +236,97 @@ class DialogHelper {
                         text: 'Union: ',
                         bold: true,
                         fontSize: 16,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton2(
+                            hint: Text(
+                              Base.homePageController.districts.isNotEmpty
+                                  ? 'Select District'
+                                  : 'Empty',
+                              style: TextStyle(
+                                fontFamily: 'Manrope Regular',
+                                fontSize: 14.0,
+                                color: AppTheme.appTextColor2,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            style: TextStyle(
+                              fontFamily: 'Manrope Regular',
+                              fontSize: 14.0,
+                              color: AppTheme.appTextColor2,
+                              fontWeight: FontWeight.w400,
+                            ),
+
+                            // icon: Icon(Icons.keyboard_arrow_down,
+                            //     color: AppTheme.appThemeColor2, size: 30.0),
+                            items: Base.homePageController.districts
+                                .map(
+                                  (item) => DropdownMenuItem<int>(
+                                    onTap: () {
+                                      Base.homePageController.selectedDistrict
+                                          .value = item;
+                                    },
+                                    value: item.id,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0.0),
+                                      child: Text(
+                                        item.name!,
+                                        style: TextStyle(
+                                          fontFamily: 'Manrope Regular',
+                                          fontSize: 14.0,
+                                          color: AppTheme.appTextColor2,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                            // dropdownElevation: 8,
+                            alignment: AlignmentDirectional.centerStart,
+                            // dropdownDecoration: BoxDecoration(
+                            //   borderRadius: BorderRadius.only(
+                            //     bottomLeft: Radius.circular(5.0),
+                            //     bottomRight: Radius.circular(5.0),
+                            //   ),
+                            // ),
+
+                            // ignore: prefer_null_aware_operators
+                            value: Base.homePageController.selectedDistrict
+                                        .value !=
+                                    null
+                                ? Base.homePageController.selectedDistrict
+                                    .value!.id
+                                : null,
+
+                            onChanged: (item) {
+                              log('$item' + 'KKKKKKKKK');
+                              // Base.homePageController.selectedDistrict.value =
+                              //     item!;
+
+                              // Base.homePageController.selectedUpozila.value =
+                              //     '';
+                              // Base.homePageController.selectedUnion.value = '';
+
+                              // Base.homePageController.getAreas(district: item);
+                            },
+                            isExpanded: true,
+                            // buttonHeight: 27,
+                            // itemHeight: 35.0,
+                            // itemPadding:
+                            //     const EdgeInsets.symmetric(horizontal: 0.0),
+                            // dropdownPadding:
+                            //     EdgeInsets.symmetric(horizontal: 0.0),
+                          ),
+                        ),
                       ),
                     ],
                   ),
