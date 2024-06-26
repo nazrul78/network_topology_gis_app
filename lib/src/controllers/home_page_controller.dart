@@ -19,13 +19,10 @@ class HomePageController extends GetxController {
   final districts = RxList<DropdownModel>([]);
   // final districts = RxList<String>(['Dhaka', 'Barishal']);
   final upozilas = RxList<String>([]);
-  final unions = RxList<String>([]);
+  final unions = RxList<DropdownModel>([]);
 
   final selectedDistrict = Rx<DropdownModel?>(null);
-  final selectedDistrictId = RxString('');
-
-  final selectedUpozila = RxString('');
-  final selectedUnion = RxString('');
+  final selectedUnion = Rx<DropdownModel?>(null);
 
   // final siteInfoList = RxList<SiteInfoModel>();
   // final editSiteInfoItem = Rx<SiteInfoModel?>(null);
@@ -244,15 +241,18 @@ class HomePageController extends GetxController {
   //       (element) => id == (element.key as ValueKey<String>).value);
   // }
 
-  void clearAllSelectedId() {
-    selectedDistrictId.value = '';
-    selectedUpozila.value = '';
-    selectedUnion.value = '';
-  }
+  // void clearAllSelectedId() {
+  //   selectedDistrictId.value = '';
+  //   selectedUpozila.value = '';
+  //   selectedUnion.value = '';
+  // }
 
   void clearAllSelectedItem() {
-    selectedDistrict.value == null;
+    selectedDistrict.value = null;
     districts.clear();
+
+    selectedUnion.value = null;
+    unions.clear();
   }
 
   Future<void> getDistrict({String? district, String? upozilla}) async {
@@ -287,6 +287,68 @@ class HomePageController extends GetxController {
         klog(districts.length);
 
         districts.addAll(listOfDistricts);
+      }
+
+      // final districtList = rawData['district'].cast<String>();
+
+      // districts.value = districtList;
+
+      // klog('districts: ${districts[0]}');
+
+      ///=============>> Upozilla list <<=================
+      // if (rawData['upozilla'] != null && district != null && upozilla == null) {
+      //   final upozillaList = rawData['upozilla'].cast<String>();
+
+      //   upozilas.value = upozillaList;
+
+      //   klog('upozilas: ${upozillaList[0]}');
+      // }
+
+      ///=============>> union list <<=================
+      // if (rawData['siteUnion'] != null &&
+      //     district != null &&
+      //     upozilla != null) {
+      //   final siteUnionList = rawData['siteUnion'].cast<String>();
+
+      //   unions.value = siteUnionList;
+
+      //   klog('unions: ${siteUnionList[0]}');
+      // }
+    }
+  }
+
+  Future<void> getUnions({required int districtId}) async {
+    final response = await apiService.get(
+      baseUrl: ENV.baseUrl,
+      path: '${ApiEndpoint.getUnion}/$districtId/unions',
+      // queryParameters: {
+      //   'district': district,
+      //   'upozilla': upozilla,
+      // }
+    );
+
+    var rawData = response!.data;
+    klog('rawData: $rawData');
+
+    final statusCode = response.statusCode;
+    klog('statusCode: $statusCode');
+
+    if (rawData != null && statusCode == 200) {
+      ///=============>> District list <<=================
+
+      final unionData = rawData as List;
+
+      if (unionData.isNotEmpty) {
+        final listOfUnions = unionData
+            .map((value) =>
+                DropdownModel.fromJson(value as Map<String, dynamic>))
+            .toList();
+
+        klog('${listOfUnions[0].name}');
+
+        klog(unions.length);
+
+        unions.addAll(listOfUnions);
       }
 
       // final districtList = rawData['district'].cast<String>();

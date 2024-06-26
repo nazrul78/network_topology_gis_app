@@ -185,10 +185,10 @@ class _HomePageState extends State<HomePage> {
             GestureDetector(
               onTap: () async {
                 Base.homePageController.clearAllSelectedItem();
+
                 Base.homePageController.getDistrict();
 
                 DialogHelper.showDropdownDialog();
-                // await showDropdownDialog22(context);
               },
               child: SingleChildScrollView(
                 child: Container(
@@ -215,18 +215,10 @@ class _HomePageState extends State<HomePage> {
                         // style: DefaultTextStyle.of(context).style,
                         children: <TextSpan>[
                           TextSpan(
-                            text: Base.homePageController.selectedUpozila
-                                        .value !=
-                                    ''
-                                ? ' > ${Base.homePageController.selectedUpozila.value}'
-                                : '',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
                               text: Base.homePageController.selectedUnion
                                           .value !=
-                                      ''
-                                  ? ' > ${Base.homePageController.selectedUnion.value}'
+                                      null
+                                  ? ' > ${Base.homePageController.selectedUnion.value!.name}'
                                   : ''),
                           // TextSpan(text: ' > khagrachari 34'),
                         ],

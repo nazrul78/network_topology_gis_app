@@ -119,7 +119,8 @@ class DialogHelper {
                               //     '';
                               // Base.homePageController.selectedUnion.value = '';
 
-                              // Base.homePageController.getAreas(district: item);
+                              Base.homePageController
+                                  .getUnions(districtId: item!);
                             },
                             isExpanded: true,
                             // buttonHeight: 27,
@@ -246,8 +247,8 @@ class DialogHelper {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton2(
                             hint: Text(
-                              Base.homePageController.districts.isNotEmpty
-                                  ? 'Select District'
+                              Base.homePageController.unions.isNotEmpty
+                                  ? 'Select Union'
                                   : 'Empty',
                               style: TextStyle(
                                 fontFamily: 'Manrope Regular',
@@ -265,11 +266,11 @@ class DialogHelper {
 
                             // icon: Icon(Icons.keyboard_arrow_down,
                             //     color: AppTheme.appThemeColor2, size: 30.0),
-                            items: Base.homePageController.districts
+                            items: Base.homePageController.unions
                                 .map(
                                   (item) => DropdownMenuItem<int>(
                                     onTap: () {
-                                      Base.homePageController.selectedDistrict
+                                      Base.homePageController.selectedUnion
                                           .value = item;
                                     },
                                     value: item.id,
@@ -299,13 +300,13 @@ class DialogHelper {
                             //   ),
                             // ),
 
-                            // ignore: prefer_null_aware_operators
-                            value: Base.homePageController.selectedDistrict
-                                        .value !=
-                                    null
-                                ? Base.homePageController.selectedDistrict
-                                    .value!.id
-                                : null,
+                            value:
+                                // ignore: prefer_null_aware_operators
+                                Base.homePageController.selectedUnion.value !=
+                                        null
+                                    ? Base.homePageController.selectedUnion
+                                        .value!.id
+                                    : null,
 
                             onChanged: (item) {
                               log('$item' + 'KKKKKKKKK');

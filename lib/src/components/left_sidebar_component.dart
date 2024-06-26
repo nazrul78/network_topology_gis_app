@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:network_topology_gis/src/base/base.dart';
 import 'package:network_topology_gis/src/config/app_theme.dart';
 import 'package:network_topology_gis/src/helpers/hex_color.dart';
 import 'package:network_topology_gis/src/helpers/k_text.dart';
+import 'package:network_topology_gis/src/helpers/navigations.dart';
+import 'package:network_topology_gis/src/pages/login_page.dart';
 
 class LeftSidebarComponent extends StatelessWidget {
   const LeftSidebarComponent({super.key});
@@ -118,7 +121,8 @@ class LeftSidebarComponent extends StatelessWidget {
                         size: 25, color: Colors.black54),
                     'Logout',
                     () async {
-                      // offAll(LoginPage());
+                      offAll(LoginPage());
+                      Base.homePageController.clearAllSelectedItem();
                       // Base.authController.logout();
                       // Get.offAll(() => LoginPage());
                     },
