@@ -160,6 +160,81 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
 
+                MarkerLayer(
+                  markers: Base.homePageController.applianceMarkers,
+                  // markers: [
+                  //   Marker(
+                  //     point: LatLng(23.809957, 90.4037839),
+                  //     width: 60,
+                  //     height: 60,
+                  //     // child: FlutterLogo(),
+                  //     child: GestureDetector(
+                  //         onTap: () {
+                  //           DialogHelper.showActionTypeSelectionDialog(
+                  //             title: 'Select an action type',
+                  //             buttonText1: 'Edit',
+                  //             buttonText2: 'Drag',
+                  //             onPressed1: () {
+                  //               Get.back();
+
+                  //               log('Marker pressed>>>>>>>>>>>>>>>>>');
+
+                  //               //  DialogHelper.showRotationDialog(item.id!);
+                  //             },
+                  //             onPressed2: () {
+                  //               Get.back();
+                  //             },
+                  //           );
+                  //         },
+                  //         child: Icon(Icons.location_pin, size: 60)),
+                  //   ),
+                  //   Marker(
+                  //     point: LatLng(22.787467, 89.921511),
+                  //     width: 60,
+                  //     height: 60,
+                  //     // child: FlutterLogo(),
+                  //     child: Icon(Icons.location_pin, size: 60),
+                  //   ),
+                  // ],
+                ),
+                MarkerLayer(
+                  markers: Base.homePageController.linkPointsMarkers,
+                  // markers: [
+                  //   Marker(
+                  //     point: LatLng(23.809957, 90.4037839),
+                  //     width: 60,
+                  //     height: 60,
+                  //     // child: FlutterLogo(),
+                  //     child: GestureDetector(
+                  //         onTap: () {
+                  //           DialogHelper.showActionTypeSelectionDialog(
+                  //             title: 'Select an action type',
+                  //             buttonText1: 'Edit',
+                  //             buttonText2: 'Drag',
+                  //             onPressed1: () {
+                  //               Get.back();
+
+                  //               log('Marker pressed>>>>>>>>>>>>>>>>>');
+
+                  //               //  DialogHelper.showRotationDialog(item.id!);
+                  //             },
+                  //             onPressed2: () {
+                  //               Get.back();
+                  //             },
+                  //           );
+                  //         },
+                  //         child: Icon(Icons.location_pin, size: 60)),
+                  //   ),
+                  //   Marker(
+                  //     point: LatLng(22.787467, 89.921511),
+                  //     width: 60,
+                  //     height: 60,
+                  //     // child: FlutterLogo(),
+                  //     child: Icon(Icons.location_pin, size: 60),
+                  //   ),
+                  // ],
+                ),
+
                 //            CircleMarker(
                 //   point: currentLatLng,
                 //   radius: 9,

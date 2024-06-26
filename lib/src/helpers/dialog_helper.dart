@@ -316,8 +316,6 @@ class DialogHelper {
                               // Base.homePageController.selectedUpozila.value =
                               //     '';
                               // Base.homePageController.selectedUnion.value = '';
-
-                              // Base.homePageController.getAreas(district: item);
                             },
                             isExpanded: true,
                             // buttonHeight: 27,
@@ -418,6 +416,11 @@ class DialogHelper {
                       ElevatedButton(
                         onPressed: () {
                           Get.back();
+
+                          Base.homePageController.getNetworkData(
+                              areaLevelFullCode: Base.homePageController
+                                  .selectedUnion.value!.code!);
+
                           // if (Base.homePageController.selectedDistrict.value !=
                           //     '') {
                           //   Base.homePageController.getSiteInfo(

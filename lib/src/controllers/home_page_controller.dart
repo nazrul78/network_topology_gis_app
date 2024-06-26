@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 import 'package:get/get.dart';
@@ -5,7 +7,10 @@ import 'package:latlong2/latlong.dart';
 import 'package:network_topology_gis/src/config/api_endpont.dart';
 import 'package:network_topology_gis/src/config/env.dart';
 import 'package:network_topology_gis/src/helpers/k_log.dart';
+import 'package:network_topology_gis/src/models/appliances_model.dart';
 import 'package:network_topology_gis/src/models/dropdown_model.dart';
+import 'package:network_topology_gis/src/models/link_points_model.dart';
+import 'package:network_topology_gis/src/models/links_model.dart';
 import 'package:network_topology_gis/src/services/api_service.dart';
 
 class HomePageController extends GetxController {
@@ -18,11 +23,17 @@ class HomePageController extends GetxController {
 
   final districts = RxList<DropdownModel>([]);
   // final districts = RxList<String>(['Dhaka', 'Barishal']);
-  final upozilas = RxList<String>([]);
+  // final upozilas = RxList<String>([]);
   final unions = RxList<DropdownModel>([]);
 
   final selectedDistrict = Rx<DropdownModel?>(null);
   final selectedUnion = Rx<DropdownModel?>(null);
+
+  /// Appliance Data
+  final applianceMarkers = RxList<Marker>([]);
+
+  /// Link Points Data
+  final linkPointsMarkers = RxList<Marker>([]);
 
   // final siteInfoList = RxList<SiteInfoModel>();
   // final editSiteInfoItem = Rx<SiteInfoModel?>(null);
@@ -162,61 +173,134 @@ class HomePageController extends GetxController {
     return value;
   }
 
-  // List<Marker> populateSiteInfoMarker(List<SiteInfoModel> infoList) {
-  //   List<Marker> markers = [];
+  List<Marker> populateApplianceMarker(List<ApplianceModel> infoList) {
+    List<Marker> markers = [];
 
-  //   for (var item in infoList) {
-  //     markers.add(
-  //       Marker(
-  //         key: Key(item.id!),
-  //         point: LatLng(item.latitude!, item.longitude!),
-  //         width: 60,
-  //         height: 60,
-  //         child: GestureDetector(
-  //           onTap: () {
-  //             DialogHelper.showActionTypeSelectionDialog(
-  //               title: 'Select an action type',
-  //               buttonText1: 'Site details',
-  //               buttonText2: 'Drag',
-  //               buttonText3: 'Pole construction',
-  //               buttonText4: 'Civil Works',
-  //               buttonText5: 'Electricity',
-  //               buttonText6: 'Solar',
-  //               onPressed1: () {
-  //                 Get.back();
+    for (var item in infoList) {
+      klog('Point Type: ${item.pointType}' + '@@@@@@@@@@@@@@@@@@@');
+      markers.add(
+        Marker(
+          key: Key(item.id!),
+          point: LatLng(item.latitude!, item.longitude!),
+          width: 60,
+          height: 60,
+          child: GestureDetector(
+            onTap: () {
+              klog('Appliance Id: ${item.id}');
 
-  //                 DialogHelper.showSurveyorEditDialog(item);
-  //               },
-  //               onPressed2: () {
-  //                 Get.back();
-  //                 Base.homePageController.editSiteInfo(item.id!);
-  //               },
-  //               onPressed3: () {
-  //                 Get.back();
-  //                 DialogHelper.poleConstructionAndSupplyFixingDialog(item);
-  //               },
-  //               onPressed4: () {
-  //                 Get.back();
-  //                 DialogHelper.civilWorksDialog(item);
-  //               },
-  //               onPressed5: () {
-  //                 Get.back();
-  //                 DialogHelper.electricityDialog(item);
-  //               },
-  //               onPressed6: () {
-  //                 Get.back();
-  //                 DialogHelper.solarDialog(item);
-  //               },
-  //             );
-  //           },
-  //           child: Icon(Icons.location_pin, size: 60),
-  //         ),
-  //       ),
-  //     );
-  //   }
+              // DialogHelper.showActionTypeSelectionDialog(
+              //   title: 'Select an action type',
+              //   buttonText1: 'Site details',
+              //   buttonText2: 'Drag',
+              //   buttonText3: 'Pole construction',
+              //   buttonText4: 'Civil Works',
+              //   buttonText5: 'Electricity',
+              //   buttonText6: 'Solar',
+              //   onPressed1: () {
+              //     Get.back();
 
-  //   return markers;
-  // }
+              //     DialogHelper.showSurveyorEditDialog(item);
+              //   },
+              //   onPressed2: () {
+              //     Get.back();
+              //     Base.homePageController.editSiteInfo(item.id!);
+              //   },
+              //   onPressed3: () {
+              //     Get.back();
+              //     DialogHelper.poleConstructionAndSupplyFixingDialog(item);
+              //   },
+              //   onPressed4: () {
+              //     Get.back();
+              //     DialogHelper.civilWorksDialog(item);
+              //   },
+              //   onPressed5: () {
+              //     Get.back();
+              //     DialogHelper.electricityDialog(item);
+              //   },
+              //   onPressed6: () {
+              //     Get.back();
+              //     DialogHelper.solarDialog(item);
+              //   },
+              // );
+            },
+            child: Icon(Icons.location_pin,
+                size: 60,
+                color: item.pointType == "Wifi Router"
+                    ? Colors.green
+                    : Colors.redAccent),
+          ),
+        ),
+      );
+    }
+
+    return markers;
+  }
+
+  List<Marker> populateLinkPointsMarker(List<LinkPointsModel> infoList) {
+    List<Marker> markers = [];
+
+    for (var item in infoList) {
+      // klog('Point Type: ${item.pointType}' + '@@@@@@@@@@@@@@@@@@@');
+      markers.add(
+        Marker(
+          key: Key(item.id!),
+          point: LatLng(item.latitude!, item.longitude!),
+          width: 60,
+          height: 60,
+          child: GestureDetector(
+            onTap: () {
+              klog('Appliance Id: ${item.id}');
+
+              // DialogHelper.showActionTypeSelectionDialog(
+              //   title: 'Select an action type',
+              //   buttonText1: 'Site details',
+              //   buttonText2: 'Drag',
+              //   buttonText3: 'Pole construction',
+              //   buttonText4: 'Civil Works',
+              //   buttonText5: 'Electricity',
+              //   buttonText6: 'Solar',
+              //   onPressed1: () {
+              //     Get.back();
+
+              //     DialogHelper.showSurveyorEditDialog(item);
+              //   },
+              //   onPressed2: () {
+              //     Get.back();
+              //     Base.homePageController.editSiteInfo(item.id!);
+              //   },
+              //   onPressed3: () {
+              //     Get.back();
+              //     DialogHelper.poleConstructionAndSupplyFixingDialog(item);
+              //   },
+              //   onPressed4: () {
+              //     Get.back();
+              //     DialogHelper.civilWorksDialog(item);
+              //   },
+              //   onPressed5: () {
+              //     Get.back();
+              //     DialogHelper.electricityDialog(item);
+              //   },
+              //   onPressed6: () {
+              //     Get.back();
+              //     DialogHelper.solarDialog(item);
+              //   },
+              // );
+            },
+            child: Icon(
+              Icons.circle,
+              size: 15,
+              color: Colors.amber,
+              // color: item.pointType == "Wifi Router"
+              //     ? Colors.green
+              //     : Colors.redAccent,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return markers;
+  }
 
   // DropdownModel findItemById(List<DropdownModel> items, String id) {
   //   final item = items.singleWhere((element) => id == element.id);
@@ -350,32 +434,108 @@ class HomePageController extends GetxController {
 
         unions.addAll(listOfUnions);
       }
+    }
+  }
 
-      // final districtList = rawData['district'].cast<String>();
+  Future<void> getNetworkData({required String areaLevelFullCode}) async {
+    applianceMarkers.clear();
+    linkPointsMarkers.clear();
+    final response = await apiService.post(
+      baseUrl: ENV.baseUrl,
+      path: ApiEndpoint.getNetwork,
+      body: {
+        'areaLevelFullCode': areaLevelFullCode,
+      },
+    );
 
-      // districts.value = districtList;
+    var rawData = response.data;
+    //  klog('rawData: $rawData');
 
-      // klog('districts: ${districts[0]}');
+    final statusCode = response.statusCode;
+    klog('statusCode: $statusCode');
 
-      ///=============>> Upozilla list <<=================
-      // if (rawData['upozilla'] != null && district != null && upozilla == null) {
-      //   final upozillaList = rawData['upozilla'].cast<String>();
+    if (rawData != null && statusCode == 200) {
+      ///=============>> Appliances list <<=================
 
-      //   upozilas.value = upozillaList;
+      final appliances = rawData['appliances'] as List;
 
-      //   klog('upozilas: ${upozillaList[0]}');
-      // }
+      // klog('appliances: $appliances');
 
-      ///=============>> union list <<=================
-      // if (rawData['siteUnion'] != null &&
-      //     district != null &&
-      //     upozilla != null) {
-      //   final siteUnionList = rawData['siteUnion'].cast<String>();
+      if (appliances.isNotEmpty) {
+        final listOfAppliance = appliances
+            .map((value) =>
+                ApplianceModel.fromJson(value as Map<String, dynamic>))
+            .toList();
 
-      //   unions.value = siteUnionList;
+        klog('${listOfAppliance[0].poleType}');
 
-      //   klog('unions: ${siteUnionList[0]}');
-      // }
+        klog(listOfAppliance.length);
+
+        if (listOfAppliance.length > 1) {
+          final bounds =
+              LatLngBounds.fromPoints(getPoints(infoList: listOfAppliance));
+          kMapController.fitCamera(
+            CameraFit.bounds(
+              bounds: bounds,
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+            ),
+          );
+        } else {
+          kMapController.move(
+            LatLng(listOfAppliance[0].latitude!, listOfAppliance[0].longitude!),
+            15,
+          );
+        }
+
+        final applianceMarkerList = populateApplianceMarker(listOfAppliance);
+        applianceMarkers.addAll(applianceMarkerList);
+        klog('Markers length: ${applianceMarkers.length}');
+      }
+
+      ///=============>> Appliances list <<=================
+
+      final links = rawData['links'] as List;
+
+      if (links.isNotEmpty) {
+        final listOfLinks = links
+            .map((value) => LinksModel.fromJson(value as Map<String, dynamic>))
+            .toList();
+
+        klog('Links count${listOfLinks.length}');
+
+        // klog(listOfAppliance.length);
+
+        final List<LinkPointsModel> listOfLinkPoints = [];
+
+        for (var element in listOfLinks) {
+          listOfLinkPoints
+              .addAll(element.linkPoints as Iterable<LinkPointsModel>);
+        }
+
+        klog('Linkpoints count${listOfLinkPoints.length}');
+
+        // if (listOfAppliance.length > 1) {
+        //   final bounds =
+        //       LatLngBounds.fromPoints(getPoints(infoList: listOfAppliance));
+        //   kMapController.fitCamera(
+        //     CameraFit.bounds(
+        //       bounds: bounds,
+        //       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+        //     ),
+        //   );
+        // } else {
+        //   kMapController.move(
+        //     LatLng(listOfAppliance[0].latitude!, listOfAppliance[0].longitude!),
+        //     15,
+        //   );
+        // }
+
+        final linkPointsMarkerList = populateLinkPointsMarker(listOfLinkPoints);
+        linkPointsMarkers.addAll(linkPointsMarkerList);
+        klog('Link Points Markers length: ${linkPointsMarkerList.length}');
+      }
+
+      klog('links: $links');
     }
   }
 
@@ -426,15 +586,15 @@ class HomePageController extends GetxController {
   // }
 
   /// To get the points from info list
-  // List<LatLng> getPoints({required List<SiteInfoModel> infoList}) {
-  //   List<LatLng> points = [];
+  List<LatLng> getPoints({required List<ApplianceModel> infoList}) {
+    List<LatLng> points = [];
 
-  //   for (var item in infoList) {
-  //     points.add(LatLng(item.latitude!, item.longitude!));
-  //   }
+    for (var item in infoList) {
+      points.add(LatLng(item.latitude!, item.longitude!));
+    }
 
-  //   return points;
-  // }
+    return points;
+  }
 
   // Future<void> getSiteInfo(
   //     {String? district, String? upozilla, String? union}) async {
