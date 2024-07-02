@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:network_topology_gis/src/base/base.dart';
 import 'package:network_topology_gis/src/helpers/navigations.dart';
-import 'package:network_topology_gis/src/pages/home_page.dart';
 import 'package:network_topology_gis/src/pages/login_page.dart';
 
 class ConfigController extends GetxController {

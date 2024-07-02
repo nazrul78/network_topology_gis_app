@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
@@ -22,8 +21,6 @@ class HomePageController extends GetxController {
   final centerLatlng = Rx<LatLng?>(null);
 
   final districts = RxList<DropdownModel>([]);
-  // final districts = RxList<String>(['Dhaka', 'Barishal']);
-  // final upozilas = RxList<String>([]);
   final unions = RxList<DropdownModel>([]);
 
   final selectedDistrict = Rx<DropdownModel?>(null);
@@ -35,143 +32,7 @@ class HomePageController extends GetxController {
   /// Link Points Data
   final linkPointsMarkers = RxList<Marker>([]);
 
-  // final siteInfoList = RxList<SiteInfoModel>();
-  // final editSiteInfoItem = Rx<SiteInfoModel?>(null);
-  // final siteInfoMarkers = RxList<Marker>([]);
-
   final isSiteInfoUpdateLoading = RxBool(false);
-
-  final zoneCamp = RxString('');
-  final distanceFromZoneCamp = RxString('');
-  final exceptionalTptReqr = RxString('');
-  final anyOthersRemarks = RxString('');
-  final remote = RxString('yes');
-  final syThreat = RxString('yes');
-  final syReqr = RxString('yes');
-  final poc = RxString('');
-  final distanceOfNearestElectricityPole = RxString('');
-  final goods = RxString('');
-
-  ///===========>> Land Owner Info <<===========
-  final landOwnerName = RxString('');
-  final landOwnerAddress = RxString('');
-  final landOwnerNid = RxString('');
-  final landOwnerMobile = RxString('');
-
-  final typesOfSite = RxList<String>(['Indoor', 'Outdoor', 'Hob']);
-  final selectedTypeOfSite = RxString('');
-  final electricity = RxString('yes');
-  final solar = RxString('yes');
-  final earthing = RxString('yes');
-
-  final resistances = RxList<String>(['Value 1', 'Value 2', 'Value 3']);
-  final selectedResistances = RxString('');
-
-  ///===========>> Pole constraction <<===========
-  final constrSampleCollection = RxString('yes');
-  final constrSampleCollectionDate = RxString('');
-  final constrReportOnSoilTest = RxString('');
-  final constrColumnDepth = RxString('');
-
-  ///===========>> Civil works <<===========
-  final civilMobilization = RxString('yes');
-  final civilDate = RxString('');
-  final civilWorkStarted = RxString('yes');
-  final civilWorkStartDate = RxString('');
-  final civilWorkProgress = RxInt(0);
-  final civilIndoorWorkProgress = RxInt(0);
-  final civilWorkCompletionDate = RxString('');
-  final civilHandoverDate = RxString('');
-  final civilToHomeName = RxString('');
-  final civilToHomeMobile = RxString('');
-
-  final civilWorkProgressValues = RxList<String>([
-    '0%',
-    '10%',
-    '20%',
-    '30%',
-    '40%',
-    '50%',
-    '60%',
-    '70%',
-    '80%',
-    '90%',
-    '100%',
-  ]);
-  final selectedCivilWorkProgress = RxString('');
-
-  final civilIndoorWorkProgressValues = RxList<String>([
-    '0%',
-    '10%',
-    '20%',
-    '30%',
-    '40%',
-    '50%',
-    '60%',
-    '70%',
-    '80%',
-    '90%',
-    '100%',
-  ]);
-  final selectedCivilIndoorWorkProgress = RxString('');
-
-  ///===========>> Electricity & Earthing <<===========
-  /// Electricity
-  final elecElectricityAvailable = RxString('yes');
-  final elecDistanceOfNearestElecPole = RxString('');
-  final elecTransformerRequired = RxString('yes');
-  final elecElectricConnectionComplete = RxString('yes');
-  final elecElectricConnectionCompletionDate = RxString('');
-
-  /// Earthing
-  final earthingBoringType = RxString('');
-  final earthingMeter = RxString('');
-  final earthingResistance = RxString('');
-  final earthingResistanceDuringPat = RxString('');
-
-  final earthingBoringTypes =
-      RxList<String>(['Single boring', 'Double boring']);
-  final selectedEarthingBoringType = RxString('');
-
-  ///===========>> Solar <<===========
-  final solarBasementComplete = RxString('yes');
-  final solarPanelFrameComplete = RxString('yes');
-  final solarPanelInstallationComplete = RxString('yes');
-  final solarChargeControllerConnected = RxString('yes');
-  final solarOutputVoltage = RxString('');
-
-  /// To convert progress int value
-  int getProgressIntVal(String val) {
-    int value = 0;
-
-    switch (val) {
-      case '0%':
-        value = 0;
-      case '10%':
-        value = 10;
-      case '20%':
-        value = 20;
-      case '30%':
-        value = 30;
-      case '40%':
-        value = 40;
-      case '50%':
-        value = 50;
-      case '60%':
-        value = 60;
-      case '70%':
-        value = 70;
-      case '80%':
-        value = 80;
-      case '90%':
-        value = 90;
-      case '100%':
-        value = 100;
-      default:
-        value = 0;
-    }
-    return value;
-  }
 
   List<Marker> populateApplianceMarker(List<ApplianceModel> infoList) {
     List<Marker> markers = [];
